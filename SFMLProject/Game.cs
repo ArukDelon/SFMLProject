@@ -14,19 +14,17 @@ namespace SFMLProject
         
         public static void Init()
         {
-            Scene MENU = new Scene();
-            RectangleShape rec = new RectangleShape(new Vector2f(60,50));
-            rec.FillColor = Color.White;
-            MENU.AddDrawableObj(rec);
-            sceneManager.AddScene(MENU);
+            sceneManager.AddScene(GetMainMenu());
             sceneManager.SwitchScene(0);
         }
 
-        private static Scene MainMenu(){
+        private static Scene GetMainMenu(){
             Scene MENU = new Scene();
             RectangleShape rec = new RectangleShape(new Vector2f(60, 50));
             rec.FillColor = Color.White;
             MENU.AddDrawableObj(rec);
+
+            return MENU;
         }
 
         
