@@ -10,10 +10,12 @@ namespace SFMLProject
 {
     public class Button: Drawable
     {
-        public event Action Clicked;
+        public event Action<Button,EventArgs> Clicked;
 
         private RectangleShape shape;
         private Text label;
+        private bool isPressed;
+        private bool isHower;
 
 
         public Button(Vector2f position, Vector2f size, string text, Font font, int fontSize)
@@ -25,15 +27,47 @@ namespace SFMLProject
             label = new Text(text, font, (uint)fontSize);
             label.Position = new Vector2f(position.X + 10, position.Y + 10);
             label.FillColor = Color.White;
+
+            isPressed = false;
+            isHower = false;
+        }
+
+        public bool IsHower(Vector2i mousePosition)
+        {
+            if (shape.GetGlobalBounds().Contains(mousePosition.X, mousePosition.Y))
+            {
+                isHower = true;
+                SetFillColor(Color.Red);
+                return true;
+            }
+            else
+            {
+                SetFillColor(Color.Blue);
+                isHower = false;
+            }
+            SetFillColor(Color.Blue);
+            return false;
         }
 
         public bool IsClicked(Vector2i mousePosition)
         {
+
             if (shape.GetGlobalBounds().Contains(mousePosition.X, mousePosition.Y))
             {
-                Clicked?.Invoke();
+                if (!isPressed && Game.inputSystem.IsMouseButtonPressed(SFML.Window.Mouse.Button.Left))
+                {
+                    isPressed = true;
+                    Clicked?.Invoke(this,EventArgs.Empty);
+                }
+                if (isPressed && !Game.inputSystem.IsMouseButtonPressed(SFML.Window.Mouse.Button.Left))
+                    isPressed = false;
                 return true;
             }
+            else
+            {
+                isPressed = false;
+            }
+
             return false;
         }
 
