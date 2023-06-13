@@ -31,7 +31,7 @@ namespace SFMLProject
 
         public void ProcessInput()
         {
-            // Обробка введення гравця
+            
         }
 
     }

@@ -8,10 +8,13 @@ using System.Threading.Tasks;
 
 namespace SFMLProject
 {
-    public class Button
+    public class Button: Drawable
     {
+        public event Action Clicked;
+
         private RectangleShape shape;
         private Text label;
+
 
         public Button(Vector2f position, Vector2f size, string text, Font font, int fontSize)
         {
@@ -24,15 +27,14 @@ namespace SFMLProject
             label.FillColor = Color.White;
         }
 
-        public void Draw(RenderWindow window)
-        {
-            window.Draw(shape);
-            window.Draw(label);
-        }
-
         public bool IsClicked(Vector2i mousePosition)
         {
-            return shape.GetGlobalBounds().Contains(mousePosition.X, mousePosition.Y);
+            if (shape.GetGlobalBounds().Contains(mousePosition.X, mousePosition.Y))
+            {
+                Clicked?.Invoke();
+                return true;
+            }
+            return false;
         }
 
         public void SetPosition(Vector2f position)
@@ -54,6 +56,12 @@ namespace SFMLProject
         public void SetFillColor(Color color)
         {
             shape.FillColor = color;
+        }
+
+        public void Draw(RenderTarget target, RenderStates states)
+        {
+            target.Draw(shape);
+            target.Draw(label);
         }
     }
 }

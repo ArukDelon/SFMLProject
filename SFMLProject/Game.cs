@@ -11,6 +11,8 @@ namespace SFMLProject
     static class Game   
     {
         private static SceneManager sceneManager = new SceneManager();
+        private static InputSystem inputSystem = new InputSystem();
+        private static string buttonKeysPressed = "";
         
         public static void Init()
         {
@@ -20,7 +22,8 @@ namespace SFMLProject
 
         private static Scene GetMainMenu(){
             Scene MENU = new Scene();
-            RectangleShape rec = new RectangleShape(new Vector2f(60, 50));
+            Button main = new Button(new Vector2f(10,10),new Vector2f(100,40), 
+                buttonKeysPressed,);
             rec.FillColor = Color.White;
             MENU.AddDrawableObj(rec);
 
@@ -31,6 +34,7 @@ namespace SFMLProject
 
         public static void Run()
         {
+            inputSystem.Update();
             sceneManager.ProcessInput();
             sceneManager.Update();
             sceneManager.Draw();
