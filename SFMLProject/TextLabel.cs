@@ -16,7 +16,6 @@ namespace SFMLProject
 
         public TextLabel(Vector2f position, string text, Font font, int fontSize)
         {
-     
             label = new Text(text, font, (uint)fontSize);
             label.Position = position;
         

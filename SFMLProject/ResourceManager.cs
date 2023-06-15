@@ -65,7 +65,7 @@ namespace SFMLProject
         public void LoadResources()
         {
             //Fonts
-            LoadFont("Default", "Fonts/catorze27style1-semibold.ttf");
+            LoadFont("Default", "Fonts/try-clother-bold.ttf");
 
             //Textures
 

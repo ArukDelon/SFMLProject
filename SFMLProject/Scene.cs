@@ -9,9 +9,27 @@ namespace SFMLProject
 {
     public class Scene
     {
-        List<Drawable> drawableObj = new List<Drawable>();
+        ImageEntity background;
+        private string Name;
 
         List<Button> buttons = new List<Button>();
+        List<Drawable> drawableObj = new List<Drawable>();
+
+        public Scene(string sceneName)
+        {
+            Name = sceneName;
+        }
+
+        public string GetName()
+        {
+            return Name;
+        }
+
+        public void AddBackgroundImage(ImageEntity image)
+        {
+            background = image;
+            background.SetSize(Program.win.Size.X,Program.win.Size.Y);
+        }
 
         public void AddDrawableObj(Drawable obj)
         {
@@ -29,7 +47,10 @@ namespace SFMLProject
 
         public void Draw()
         {
-            foreach(var ob in drawableObj)
+            if(background != null)
+                Program.win.Draw(background);
+
+            foreach (var ob in drawableObj)
             {
                 Program.win.Draw(ob);
             }

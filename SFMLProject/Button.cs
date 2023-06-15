@@ -20,13 +20,26 @@ namespace SFMLProject
 
         public Button(Vector2f position, Vector2f size, string text, Font font, int fontSize)
         {
-            shape = new RectangleShape(size);
-            shape.Position = position;
-            shape.FillColor = Color.Blue;
-
             label = new Text(text, font, (uint)fontSize);
-            label.Position = new Vector2f(position.X + 10, position.Y + 10);
+            label.Position = new Vector2f(position.X, position.Y);
             label.FillColor = Color.White;
+
+            Vector2f buttonSize = new Vector2f(label.GetLocalBounds().Width + 20, label.GetLocalBounds().Height + 10);
+            
+            shape = new RectangleShape(buttonSize);
+            shape.Position = position;
+            shape.FillColor = Color.Transparent;
+
+          
+            Vector2f buttonsize = shape.Size; // отримання розміру кнопки
+            Vector2f textSize = new Vector2f(label.GetLocalBounds().Width, label.GetLocalBounds().Height); // отримання розміру тексту
+
+            float textX = (shape.Position.X + (buttonsize.X - textSize.X) / 2); // обчислення положення тексту по осі X
+            float textY = (shape.Position.Y + (buttonsize.Y - textSize.Y) / 2); // обчислення положення тексту по осі Y
+
+            label.Position = new Vector2f(textX, textY);
+            
+
 
             isPressed = false;
             isHower = false;
@@ -37,15 +50,30 @@ namespace SFMLProject
             if (shape.GetGlobalBounds().Contains(mousePosition.X, mousePosition.Y))
             {
                 isHower = true;
-                SetFillColor(Color.Red);
+                label.Scale = new Vector2f(1.1f, 1.1f);
+                Vector2f buttonsize = shape.Size; // отримання розміру кнопки
+                Vector2f textSize = new Vector2f(label.GetLocalBounds().Width * 1.1f, label.GetLocalBounds().Height * 1.1f); // отримання розміру тексту
+
+                float textX = (shape.Position.X + (buttonsize.X - textSize.X) / 2); // обчислення положення тексту по осі X
+                float textY = (shape.Position.Y + (buttonsize.Y - textSize.Y) / 2); // обчислення положення тексту по осі Y
+               
+                label.Position = new Vector2f(textX, textY - 1);
+
                 return true;
             }
             else
             {
-                SetFillColor(Color.Blue);
+                label.Scale = new Vector2f(1f, 1f);
+                Vector2f buttonsize = shape.Size; // отримання розміру кнопки
+                Vector2f textSize = new Vector2f(label.GetLocalBounds().Width, label.GetLocalBounds().Height); // отримання розміру тексту
+
+                float textX = (shape.Position.X + (buttonsize.X - textSize.X) / 2); // обчислення положення тексту по осі X
+                float textY = (shape.Position.Y + (buttonsize.Y - textSize.Y) / 2); // обчислення положення тексту по осі Y
+        
+                label.Position = new Vector2f(textX, textY);
                 isHower = false;
             }
-            SetFillColor(Color.Blue);
+        
             return false;
         }
 
@@ -74,12 +102,22 @@ namespace SFMLProject
         public void SetPosition(Vector2f position)
         {
             shape.Position = position;
-            label.Position = new Vector2f(position.X + 10, position.Y + 10);
+            Vector2f buttonsize = shape.Size; // отримання розміру кнопки
+            Vector2f textSize = new Vector2f(label.GetLocalBounds().Width, label.GetLocalBounds().Height); // отримання розміру тексту
+
+            float textX = (shape.Position.X + (buttonsize.X - textSize.X) / 2); // обчислення положення тексту по осі X
+            float textY = (shape.Position.Y + (buttonsize.Y - textSize.Y) / 2); // обчислення положення тексту по осі Y
+
+            label.Position = new Vector2f(textX, textY);
         }
 
         public void SetSize(Vector2f size)
         {
             shape.Size = size;
+        }
+        public void SetFontSize(uint size)
+        {
+            label.CharacterSize = size;
         }
 
         public void SetText(string text)

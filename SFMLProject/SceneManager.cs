@@ -31,6 +31,28 @@ namespace SFMLProject
             currentScene = scene;
         }
 
+        public void SwitchScene(string sceneName)
+        {
+            try
+            {
+                for (int i = 0; i < scenes.Count; i++)
+                {
+                    if (scenes[i].GetName().Equals(sceneName))
+                    {
+                        currentScene = scenes[i];
+                        return;
+                    }
+                }
+                throw new Exception("Scene has not found");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Ошибка: {e.Message}");
+            }
+           
+        }
+
+
         public void SwitchScene(int sceneID)
         {
             currentScene = scenes[sceneID];
